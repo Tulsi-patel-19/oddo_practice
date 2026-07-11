@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Products | Inventory Management</title>
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
+    />
+    <link rel="stylesheet" href="css/style.css" />
+    <link rel="stylesheet" href="css/responsive.css" />
+  </head>
+  <body data-page="products">
+    <div class="backdrop" id="backdrop"></div>
+    <div class="layout">
+      <!-- Sidebar -->
+      <aside class="sidebar" id="sidebar">
+        <div class="sidebar__brand">
+          <i class="fa-solid fa-boxes-stacked"></i>
+          <span>StockFlow</span>
+        </div>
+        <ul class="sidebar__menu">
+          <li><a href="index.html"><i class="fa-solid fa-gauge-high"></i> Dashboard</a></li>
+          <li><a href="products.html" class="active"><i class="fa-solid fa-box"></i> Products</a></li>
+          <li><a href="categories.html"><i class="fa-solid fa-tags"></i> Categories</a></li>
+          <li><a href="suppliers.html"><i class="fa-solid fa-truck-field"></i> Suppliers</a></li>
+        </ul>
+        <div class="sidebar__footer">
+          <a href="#" onclick="return false"><i class="fa-solid fa-right-from-bracket"></i> Logout</a>
+        </div>
+      </aside>
+
+      <div class="main">
+        <!-- Navbar -->
+        <header class="navbar">
+          <div class="navbar__left">
+            <button class="hamburger" id="hamburger" aria-label="Toggle menu">
+              <i class="fa-solid fa-bars"></i>
+            </button>
+            <div class="search">
+              <i class="fa-solid fa-magnifying-glass"></i>
+              <input type="text" id="searchInput" placeholder="Search products..." aria-label="Search products" />
+            </div>
+          </div>
+          <div class="navbar__right">
+            <button class="icon-btn" aria-label="Notifications">
+              <i class="fa-solid fa-bell"></i>
+            </button>
+            <div class="admin">
+              <div class="admin__avatar">A</div>
+              <div class="admin__name-wrap admin__meta">
+                <div class="admin__name">Admin User</div>
+                <div class="admin__role">Administrator</div>
+              </div>
+            </div>
+          </div>
+        </header>
+
+        <main class="content">
+          <div class="page-head">
+            <div>
+              <h1>Products</h1>
+              <p>Manage your product catalog and stock levels</p>
+            </div>
+            <button class="btn btn-primary" id="addBtn">
+              <i class="fa-solid fa-plus"></i> <span class="btn-text">Add Product</span>
+            </button>
+          </div>
+
+          <section class="panel">
+            <div class="panel__head">
+              <h2>All Products</h2>
+            </div>
+            <div class="table-wrap">
+              <table>
+                <thead>
+                  <tr>
+                    <th>Product Name</th>
+                    <th>Price</th>
+                    <th>Stock</th>
+                    <th>Category</th>
+                    <th>Supplier</th>
+                    <th>Actions</th>
+                  </tr>
+                </thead>
+                <tbody id="productsBody">
+                  <tr class="state-row"><td colspan="6"><span class="spinner"></span></td></tr>
+                </tbody>
+              </table>
+            </div>
+          </section>
+        </main>
+      </div>
+    </div>
+
+    <!-- Add / Edit Product Modal -->
+    <div class="modal-overlay" id="productModal">
+      <div class="modal">
+        <div class="modal__head">
+          <h3 id="productModalTitle">Add Product</h3>
+          <button class="modal__close" type="button" onclick="closeModal('productModal')">
+            <i class="fa-solid fa-xmark"></i>
+          </button>
+        </div>
+        <form id="productForm" novalidate>
+          <div class="modal__body">
+            <input type="hidden" name="id" id="p_id" />
+            <div class="form-group">
+              <label>Product Name <span class="req">*</span></label>
+              <input type="text" name="name" placeholder="e.g. Wireless Mouse" />
+              <span class="field-error"></span>
+            </div>
+            <div class="form-row">
+              <div class="form-group">
+                <label>Price ($) <span class="req">*</span></label>
+                <input type="number" name="price" step="0.01" min="0" placeholder="0.00" />
+                <span class="field-error"></span>
+              </div>
+              <div class="form-group">
+                <label>Stock <span class="req">*</span></label>
+                <input type="number" name="stock" min="0" placeholder="0" />
+                <span class="field-error"></span>
+              </div>
+            </div>
+            <div class="form-row">
+              <div class="form-group">
+                <label>Category</label>
+                <select name="category_id" id="p_category_id">
+                  <option value="">Select category</option>
+                </select>
+                <span class="field-error"></span>
+              </div>
+              <div class="form-group">
+                <label>Supplier</label>
+                <select name="supplier_id" id="p_supplier_id">
+                  <option value="">Select supplier</option>
+                </select>
+                <span class="field-error"></span>
+              </div>
+            </div>
+          </div>
+          <div class="modal__foot">
+            <button type="button" class="btn btn-light" onclick="closeModal('productModal')">Cancel</button>
+            <button type="submit" class="btn btn-primary"><i class="fa-solid fa-floppy-disk"></i> Save</button>
+          </div>
+        </form>
+      </div>
+    </div>
+
+    <!-- View Product Modal -->
+    <div class="modal-overlay" id="viewModal">
+      <div class="modal">
+        <div class="modal__head">
+          <h3>Product Details</h3>
+          <button class="modal__close" type="button" onclick="closeModal('viewModal')">
+            <i class="fa-solid fa-xmark"></i>
+          </button>
+        </div>
+        <div class="modal__body" id="viewBody"></div>
+        <div class="modal__foot">
+          <button type="button" class="btn btn-light" onclick="closeModal('viewModal')">Close</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Confirm Modal -->
+    <div class="modal-overlay" id="confirmModal">
+      <div class="modal" style="max-width: 400px">
+        <div class="modal__body">
+          <div class="confirm-box">
+            <i class="fa-solid fa-triangle-exclamation"></i>
+            <h3>Please confirm</h3>
+            <p id="confirmMessage"></p>
+          </div>
+        </div>
+        <div class="modal__foot">
+          <button type="button" class="btn btn-light" id="confirmNo">Cancel</button>
+          <button type="button" class="btn btn-danger" id="confirmYes"><i class="fa-solid fa-trash"></i> Delete</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="toast-wrap"></div>
+    <script src="js/api.js"></script>
+    <script src="js/script.js"></script>
+  </body>
+</html>

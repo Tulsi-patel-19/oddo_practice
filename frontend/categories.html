@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Categories | Inventory Management</title>
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
+    />
+    <link rel="stylesheet" href="css/style.css" />
+    <link rel="stylesheet" href="css/responsive.css" />
+  </head>
+  <body data-page="categories">
+    <div class="backdrop" id="backdrop"></div>
+    <div class="layout">
+      <aside class="sidebar" id="sidebar">
+        <div class="sidebar__brand">
+          <i class="fa-solid fa-boxes-stacked"></i>
+          <span>StockFlow</span>
+        </div>
+        <ul class="sidebar__menu">
+          <li><a href="index.html"><i class="fa-solid fa-gauge-high"></i> Dashboard</a></li>
+          <li><a href="products.html"><i class="fa-solid fa-box"></i> Products</a></li>
+          <li><a href="categories.html" class="active"><i class="fa-solid fa-tags"></i> Categories</a></li>
+          <li><a href="suppliers.html"><i class="fa-solid fa-truck-field"></i> Suppliers</a></li>
+        </ul>
+        <div class="sidebar__footer">
+          <a href="#" onclick="return false"><i class="fa-solid fa-right-from-bracket"></i> Logout</a>
+        </div>
+      </aside>
+
+      <div class="main">
+        <header class="navbar">
+          <div class="navbar__left">
+            <button class="hamburger" id="hamburger" aria-label="Toggle menu">
+              <i class="fa-solid fa-bars"></i>
+            </button>
+            <div class="search">
+              <i class="fa-solid fa-magnifying-glass"></i>
+              <input type="text" id="searchInput" placeholder="Search categories..." aria-label="Search categories" />
+            </div>
+          </div>
+          <div class="navbar__right">
+            <button class="icon-btn" aria-label="Notifications">
+              <i class="fa-solid fa-bell"></i>
+            </button>
+            <div class="admin">
+              <div class="admin__avatar">A</div>
+              <div class="admin__name-wrap admin__meta">
+                <div class="admin__name">Admin User</div>
+                <div class="admin__role">Administrator</div>
+              </div>
+            </div>
+          </div>
+        </header>
+
+        <main class="content">
+          <div class="page-head">
+            <div>
+              <h1>Categories</h1>
+              <p>Organize products into categories</p>
+            </div>
+            <button class="btn btn-primary" id="addBtn">
+              <i class="fa-solid fa-plus"></i> <span class="btn-text">Add Category</span>
+            </button>
+          </div>
+
+          <section class="panel">
+            <div class="panel__head">
+              <h2>All Categories</h2>
+            </div>
+            <div class="table-wrap">
+              <table>
+                <thead>
+                  <tr>
+                    <th>ID</th>
+                    <th>Category Name</th>
+                    <th>Description</th>
+                    <th>Actions</th>
+                  </tr>
+                </thead>
+                <tbody id="categoriesBody">
+                  <tr class="state-row"><td colspan="4"><span class="spinner"></span></td></tr>
+                </tbody>
+              </table>
+            </div>
+          </section>
+        </main>
+      </div>
+    </div>
+
+    <!-- Add / Edit Category Modal -->
+    <div class="modal-overlay" id="categoryModal">
+      <div class="modal">
+        <div class="modal__head">
+          <h3 id="categoryModalTitle">Add Category</h3>
+          <button class="modal__close" type="button" onclick="closeModal('categoryModal')">
+            <i class="fa-solid fa-xmark"></i>
+          </button>
+        </div>
+        <form id="categoryForm" novalidate>
+          <div class="modal__body">
+            <input type="hidden" name="id" id="c_id" />
+            <div class="form-group">
+              <label>Category Name <span class="req">*</span></label>
+              <input type="text" name="name" placeholder="e.g. Electronics" />
+              <span class="field-error"></span>
+            </div>
+            <div class="form-group">
+              <label>Description</label>
+              <textarea name="description" placeholder="Short description (optional)"></textarea>
+              <span class="field-error"></span>
+            </div>
+          </div>
+          <div class="modal__foot">
+            <button type="button" class="btn btn-light" onclick="closeModal('categoryModal')">Cancel</button>
+            <button type="submit" class="btn btn-primary"><i class="fa-solid fa-floppy-disk"></i> Save</button>
+          </div>
+        </form>
+      </div>
+    </div>
+
+    <!-- Confirm Modal -->
+    <div class="modal-overlay" id="confirmModal">
+      <div class="modal" style="max-width: 400px">
+        <div class="modal__body">
+          <div class="confirm-box">
+            <i class="fa-solid fa-triangle-exclamation"></i>
+            <h3>Please confirm</h3>
+            <p id="confirmMessage"></p>
+          </div>
+        </div>
+        <div class="modal__foot">
+          <button type="button" class="btn btn-light" id="confirmNo">Cancel</button>
+          <button type="button" class="btn btn-danger" id="confirmYes"><i class="fa-solid fa-trash"></i> Delete</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="toast-wrap"></div>
+    <script src="js/api.js"></script>
+    <script src="js/script.js"></script>
+  </body>
+</html>

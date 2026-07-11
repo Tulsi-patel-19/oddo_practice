@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Dashboard | Inventory Management</title>
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
+    />
+    <link rel="stylesheet" href="css/style.css" />
+    <link rel="stylesheet" href="css/responsive.css" />
+  </head>
+  <body data-page="dashboard">
+    <div class="backdrop" id="backdrop"></div>
+    <div class="layout">
+      <!-- Sidebar -->
+      <aside class="sidebar" id="sidebar">
+        <div class="sidebar__brand">
+          <i class="fa-solid fa-boxes-stacked"></i>
+          <span>StockFlow</span>
+        </div>
+        <ul class="sidebar__menu">
+          <li><a href="index.html" class="active"><i class="fa-solid fa-gauge-high"></i> Dashboard</a></li>
+          <li><a href="products.html"><i class="fa-solid fa-box"></i> Products</a></li>
+          <li><a href="categories.html"><i class="fa-solid fa-tags"></i> Categories</a></li>
+          <li><a href="suppliers.html"><i class="fa-solid fa-truck-field"></i> Suppliers</a></li>
+        </ul>
+        <div class="sidebar__footer">
+          <a href="#" onclick="return false"><i class="fa-solid fa-right-from-bracket"></i> Logout</a>
+        </div>
+      </aside>
+
+      <!-- Main -->
+      <div class="main">
+        <!-- Navbar -->
+        <header class="navbar">
+          <div class="navbar__left">
+            <button class="hamburger" id="hamburger" aria-label="Toggle menu">
+              <i class="fa-solid fa-bars"></i>
+            </button>
+            <div class="search">
+              <i class="fa-solid fa-magnifying-glass"></i>
+              <input type="text" placeholder="Search..." aria-label="Search" />
+            </div>
+          </div>
+          <div class="navbar__right">
+            <button class="icon-btn" aria-label="Notifications">
+              <i class="fa-solid fa-bell"></i>
+              <span class="badge" id="notifBadge">0</span>
+            </button>
+            <div class="admin">
+              <div class="admin__avatar">A</div>
+              <div class="admin__name-wrap admin__meta">
+                <div class="admin__name">Admin User</div>
+                <div class="admin__role">Administrator</div>
+              </div>
+            </div>
+          </div>
+        </header>
+
+        <!-- Content -->
+        <main class="content">
+          <div class="page-head">
+            <div>
+              <h1>Dashboard</h1>
+              <p>Overview of your inventory at a glance</p>
+            </div>
+          </div>
+
+          <!-- Stat cards -->
+          <section class="stats">
+            <div class="stat-card">
+              <div class="stat-card__icon blue"><i class="fa-solid fa-box"></i></div>
+              <div>
+                <div class="stat-card__value" id="statProducts">0</div>
+                <div class="stat-card__label">Total Products</div>
+              </div>
+            </div>
+            <div class="stat-card">
+              <div class="stat-card__icon green"><i class="fa-solid fa-tags"></i></div>
+              <div>
+                <div class="stat-card__value" id="statCategories">0</div>
+                <div class="stat-card__label">Total Categories</div>
+              </div>
+            </div>
+            <div class="stat-card">
+              <div class="stat-card__icon amber"><i class="fa-solid fa-truck-field"></i></div>
+              <div>
+                <div class="stat-card__value" id="statSuppliers">0</div>
+                <div class="stat-card__label">Total Suppliers</div>
+              </div>
+            </div>
+            <div class="stat-card">
+              <div class="stat-card__icon red"><i class="fa-solid fa-triangle-exclamation"></i></div>
+              <div>
+                <div class="stat-card__value" id="statLowStock">0</div>
+                <div class="stat-card__label">Low Stock Products</div>
+              </div>
+            </div>
+          </section>
+
+          <!-- Low stock panel -->
+          <section class="panel">
+            <div class="panel__head">
+              <h2><i class="fa-solid fa-triangle-exclamation" style="color: var(--amber)"></i> Low Stock Alerts</h2>
+              <a href="products.html" class="btn btn-light"><i class="fa-solid fa-arrow-right"></i> View all products</a>
+            </div>
+            <div class="table-wrap">
+              <table>
+                <thead>
+                  <tr>
+                    <th>Product Name</th>
+                    <th>Category</th>
+                    <th>Price</th>
+                    <th>Stock</th>
+                  </tr>
+                </thead>
+                <tbody id="lowStockBody">
+                  <tr class="state-row"><td colspan="4"><span class="spinner"></span></td></tr>
+                </tbody>
+              </table>
+            </div>
+          </section>
+        </main>
+      </div>
+    </div>
+
+    <div class="toast-wrap"></div>
+    <script src="js/api.js"></script>
+    <script src="js/script.js"></script>
+  </body>
+</html>
